@@ -1,0 +1,17 @@
+steps:
+
+- name: 'debian'
+  args: ['ls']
+
+# Bring in dependencies
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install', '--only=production', '.']
+
+- name: 'debian'
+  args: ['ls']
+
+# Build docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/gc-node-test-app:$SHORT_SHA', '.']
+
+images: ['gcr.io/$PROJECT_ID/gc-node-test-app']
